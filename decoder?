@@ -1,0 +1,24 @@
+pip install Neural-Decoding
+#import LSTM decoder
+from Neuronal_Decoding.decoders import LSTMDecoder
+from Neuronal_Decoding.preprocessing_funcs import get_spikes_with_
+#define bins
+#How many bins of neural data prior to the output are used for decoding
+bins_before=13
+#Whether to use concurrent time bin of neural data
+bins_current=1
+#How many bins of neural data after the output are used for decoding
+bins_after=0
+#computing covariate matrix including spike history from prior bins
+X=get_spikes_with_history(neural_data, bins_before, bins_after, bins_current)
+#train and test decoder
+#declare model and set params of the model
+model_lstm=LSTMDecoder(units=400, num_epochs=5)
+#fit the model
+model_lstm.fit(X_train, y_train )
+#get predictions
+y_test_predicted_lstm=model_lstm.predict(X_test)
+#________________________________________________
+import numpy as np
+#used as kalman filter
+from numpy.linalg import inv as inv
